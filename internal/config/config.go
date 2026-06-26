@@ -20,9 +20,14 @@ func LoadEnv() *Config {
 		log.Fatal("Error loading .env file")
 	}
 
+	dsn := os.Getenv("DSN")
+	if dsn == "" {
+		dsn = os.Getenv("DATABASE_URL")
+	}
+
 	return &Config{
 		Port:      os.Getenv("PORT"),
-		Dsn:       os.Getenv("DSN"),
+		Dsn:       dsn,
 		JwtSecret: os.Getenv("JWT_SECRET"),
 	}
 }
